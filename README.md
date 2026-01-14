@@ -2,6 +2,41 @@
 
 A comprehensive collection of production-ready AI agent execution frameworks and integration patterns.
 
+This repository serves as both a **community index** of agent harnesses and a **reference implementation** of advanced multi-agent collaboration patterns. Whether you're building autonomous coding agents, editorial workflows, or custom AI automations, you'll find battle-tested patterns and community resources here.
+
+## 🌟 Community Agent Harnesses
+
+### Coding & Development
+
+#### **Anthropic's Autonomous Coding Agent** 🤖
+**Repository**: [claude-quickstarts/autonomous-coding](https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding)  
+**Article**: [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+
+Production-grade autonomous coding agent with robust error handling, tool integration, and safety measures. The gold standard implementation based on Anthropic's research into effective agent harnesses.
+
+**Key Features:**
+- Long-running autonomous execution with safety constraints  
+- Comprehensive error handling and recovery patterns
+- Tool integration framework for file operations and terminal access
+- Built-in guardrails and execution limits
+
+#### **Ralph Wiggum Loop** 🔄
+**Repositories**: 
+- [how-to-ralph-wiggum](https://github.com/ghuntley/how-to-ralph-wiggum) - Methodology and patterns
+- [ralph](https://github.com/snarktank/ralph) - Reference implementation
+
+Self-improving coding agent that iteratively refines its own code through automated feedback loops. Named after the Simpsons character for its persistent, innocent approach to problem-solving.
+
+**Key Features:**
+- Self-reflective code improvement cycles
+- Automated testing and validation loops  
+- Iterative refinement through AI feedback
+- Continuous learning and adaptation patterns
+
+---
+
+## 🏠 Local Harnesses (This Repository)
+
 ## 🚀 Quick Start
 
 ### Papermill + OpenCode Integration
@@ -28,7 +63,7 @@ cd examples/editorial_pipeline
 # Execute multi-hat editorial review process
 ```
 
-## 📋 Available Harnesses
+## 📋 Local Harnesses (Reference Implementations)
 
 ### 1. **Papermill + OpenCode Atomic Agent** ⚡
 **Location**: `examples/papermill/opencode/`  
@@ -225,6 +260,13 @@ cd examples && npm test
 
 ## 🤝 Contributing
 
+### Adding New Community Harnesses
+1. **Submit a PR** with your harness added to the Community Agent Harnesses section
+2. **Include**: Repository link, brief description, key features, and category
+3. **Requirements**: Production-ready code with documentation and examples
+4. **Categories**: We welcome harnesses for coding, writing, research, analysis, and other domains
+
+### Local Harness Development  
 1. Follow established patterns in `examples/` directory
 2. Add comprehensive documentation for new harnesses
 3. Include working examples and test cases
