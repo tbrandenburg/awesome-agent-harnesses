@@ -1,0 +1,41 @@
+---
+# Code Development Pipeline  
+# Multi-step pipeline for designing, implementing, and testing code
+
+steps:
+  - name: "design_spec"
+    prompt: "Design a comprehensive specification for a Python library that helps developers manage configuration files (JSON, YAML, TOML). Include API design, key classes, methods, error handling, and usage examples."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 90
+    
+  - name: "implement_core"
+    prompt: "Based on the previous specification, implement the core configuration manager class in Python. Focus on clean, well-documented code with proper error handling. Include docstrings and type hints."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 120
+    depends_on: "design_spec"
+    
+  - name: "implement_tests"
+    prompt: "Create comprehensive unit tests for the configuration manager class from the previous step. Use pytest and include tests for edge cases, error conditions, and all major functionality. Aim for high test coverage."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 90
+    depends_on: "implement_core"
+    
+  - name: "create_examples"
+    prompt: "Create practical usage examples for the configuration library. Include at least 3 different scenarios: web application config, CLI tool config, and data processing pipeline config. Show best practices."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 60
+    depends_on: "implement_core"
+    
+  - name: "generate_documentation"
+    prompt: "Generate complete documentation for this configuration library including: README.md, API documentation, installation guide, and migration guide from other config libraries. Make it production-ready."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 90
+    depends_on: ["implement_core", "implement_tests", "create_examples"]
+
+pipeline:
+  name: "Complete Code Development Workflow"
+  description: "End-to-end development pipeline from spec to documentation"
+  output_format: "markdown"
+  session_management: true
+  error_handling: "stop"
+  max_retries: 3

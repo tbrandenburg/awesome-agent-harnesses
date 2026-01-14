@@ -3,7 +3,7 @@
 
 SHELL := /bin/bash
 
-.PHONY: help run run-riddle run-code run-explanation test-all setup clean examples batch
+.PHONY: help run run-riddle run-code run-explanation test-all setup clean examples batch pipeline-research pipeline-development session robust
 
 # Default target
 help:
@@ -15,6 +15,17 @@ help:
 	@echo "  make run-riddle   - Generate a programming riddle"
 	@echo "  make run-code     - Generate Python code"
 	@echo "  make run-explanation - Technical explanation"
+	@echo ""
+	@echo "🔗 Multi-Step Pipelines:"
+	@echo "  make pipeline-research    - Multi-step research workflow"
+	@echo "  make pipeline-development - Code development pipeline"
+	@echo ""
+	@echo "💬 Session Management:"
+	@echo "  make session              - Multi-turn conversation session"
+	@echo "  make list-sessions        - List all active sessions"
+	@echo ""
+	@echo "🛡️  Robust Execution:"
+	@echo "  make robust               - Execute with error handling and retry logic"
 	@echo ""
 	@echo "🔧 Utility Commands:"
 	@echo "  make test-all     - Test all example configurations"
@@ -270,3 +281,137 @@ advanced:
 	@echo ""
 	@echo "⏱️  Timeout Management:"
 	@echo "   make run PROMPT=\"Complex task\" TIMEOUT=\"600\""
+	@echo ""
+
+# Multi-step pipeline targets
+pipeline-research: output
+	@echo "🔬 Multi-Step AI Research Pipeline"
+	@echo "================================="
+	@echo ""
+	$(VENV_ACTIVATE) papermill pipeline_execution.ipynb output/pipeline_research_$(TIMESTAMP).ipynb \
+		-p pipeline_file "pipeline_research.yaml" \
+		-p output_dir "output" \
+		-p session_id "research_$(TIMESTAMP)" \
+		--log-level INFO
+	@echo ""
+	@echo "✅ Research pipeline completed! Check output/research_$(TIMESTAMP)/"
+
+pipeline-development: output  
+	@echo "💻 Multi-Step Code Development Pipeline"
+	@echo "======================================"
+	@echo ""
+	$(VENV_ACTIVATE) papermill pipeline_execution.ipynb output/pipeline_dev_$(TIMESTAMP).ipynb \
+		-p pipeline_file "pipeline_development.yaml" \
+		-p output_dir "output" \
+		-p session_id "development_$(TIMESTAMP)" \
+		--log-level INFO
+	@echo ""
+	@echo "✅ Development pipeline completed! Check output/development_$(TIMESTAMP)/"
+
+# Enhanced pipeline with custom config
+pipeline: output
+	@echo "🔗 Custom Multi-Step Pipeline"
+	@echo "============================"
+	@if [ -z "$(PIPELINE_FILE)" ]; then \
+		echo "Usage: make pipeline PIPELINE_FILE=your_pipeline.yaml"; \
+		echo "Available pipelines:"; \
+		ls -1 pipeline_*.yaml 2>/dev/null || echo "  No pipeline files found"; \
+		exit 1; \
+	fi
+	@echo "Pipeline: $(PIPELINE_FILE)"
+	@echo ""
+	$(VENV_ACTIVATE) papermill pipeline_execution.ipynb output/custom_pipeline_$(TIMESTAMP).ipynb \
+		-p pipeline_file "$(PIPELINE_FILE)" \
+		-p output_dir "output" \
+		-p session_id "custom_$(TIMESTAMP)" \
+		--log-level INFO
+	@echo ""
+	@echo "✅ Custom pipeline completed! Check output/custom_$(TIMESTAMP)/"
+
+# Session management targets
+SESSION_ID ?= default_session
+ACTION ?= continue
+MAX_HISTORY ?= 10
+
+session: output
+	@echo "💬 OpenCode Multi-Turn Session Management"
+	@echo "========================================"
+	@echo "Session ID: $(SESSION_ID)"
+	@echo "Action: $(ACTION)"
+	@echo "Prompt: $(PROMPT)"
+	@echo "Model: $(MODEL)"
+	@echo "Max History: $(MAX_HISTORY)"
+	@echo ""
+	$(VENV_ACTIVATE) papermill session_management.ipynb output/session_$(SESSION_ID)_$(TIMESTAMP).ipynb \
+		-p session_id "$(SESSION_ID)" \
+		-p prompt "$(PROMPT)" \
+		-p model "$(MODEL)" \
+		-p action "$(ACTION)" \
+		-p max_history "$(MAX_HISTORY)" \
+		-p verbose "$(VERBOSE)" \
+		--log-level INFO
+	@echo ""
+	@echo "✅ Session operation completed!"
+
+# List all active sessions
+list-sessions:
+	@echo "📋 Active OpenCode Sessions"
+	@echo "=========================="
+	@echo ""
+	@if [ -d "sessions" ]; then \
+		for session_dir in sessions/*/; do \
+			if [ -d "$$session_dir" ]; then \
+				session_name=$$(basename "$$session_dir"); \
+				metadata_file="$$session_dir/session_metadata.json"; \
+				if [ -f "$$metadata_file" ]; then \
+					echo "🔹 Session: $$session_name"; \
+					if command -v jq >/dev/null 2>&1; then \
+						echo "   Created: $$(jq -r '.created_at' \"$$metadata_file\")"; \
+						echo "   Updated: $$(jq -r '.last_updated' \"$$metadata_file\")"; \
+						echo "   Messages: $$(jq -r '.message_count' \"$$metadata_file\")"; \
+						echo "   Model: $$(jq -r '.model' \"$$metadata_file\")"; \
+					else \
+						echo "   Metadata: $$(cat \"$$metadata_file\" | head -3)"; \
+					fi; \
+					echo ""; \
+				fi; \
+			fi; \
+		done; \
+	else \
+		echo "No sessions directory found. Sessions will be created on first use."; \
+	fi
+
+# Session examples and shortcuts
+session-start:
+	@$(MAKE) session ACTION=start SESSION_ID="$(SESSION_ID)" PROMPT="$(PROMPT)"
+
+session-continue:
+	@$(MAKE) session ACTION=continue SESSION_ID="$(SESSION_ID)" PROMPT="$(PROMPT)"
+
+session-end:
+	@$(MAKE) session ACTION=end SESSION_ID="$(SESSION_ID)" PROMPT="Goodbye"
+
+# Clean up sessions
+clean-sessions:
+	@echo "🧹 Cleaning up session data"
+	@read -p "Are you sure you want to delete all session data? (y/N): " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		rm -rf sessions/; \
+		echo "✅ All session data deleted"; \
+	else \
+		echo \"❌ Operation cancelled\"; \
+	fi
+
+# Robust execution with error handling and retry logic
+CONFIG_FILE ?= error_config.yaml
+
+robust: output
+	@echo \"🛡️  Robust OpenCode Execution with Error Handling\"
+	@echo \"===============================================\"
+	@echo \"Prompt: $(PROMPT)\"
+	@echo \"Model: $(MODEL)\"
+	@echo \"Config: $(CONFIG_FILE)\" 
+	@echo \"Max retries: $(MAX_RETRIES)\"
+	@echo \"Timeout: $(TIMEOUT)\"
+	@echo \"\"
+	$(VENV_ACTIVATE) papermill robust_execution.ipynb output/robust_$(TIMESTAMP).ipynb \\\n\t\t-p prompt \"$(PROMPT)\" \\\n\t\t-p model \"$(MODEL)\" \\\n\t\t-p config_file \"$(CONFIG_FILE)\" \\\n\t\t-p max_retries \"$(MAX_RETRIES)\" \\\n\t\t-p timeout \"$(TIMEOUT)\" \\\n\t\t-p verbose \"$(VERBOSE)\" \\\n\t\t--log-level INFO\n\t@echo \"\"\n\t@echo \"✅ Robust execution completed! Check output/robust_$(TIMESTAMP).ipynb and error logs\"

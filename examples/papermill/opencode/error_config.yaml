@@ -1,0 +1,114 @@
+---
+# Error Handling and Retry Configuration
+# This file defines comprehensive error handling strategies for OpenCode operations
+
+error_handling:
+  # Global retry settings
+  max_retries: 3
+  retry_delay: 5  # seconds between retries
+  exponential_backoff: true
+  backoff_multiplier: 2
+  max_retry_delay: 60  # maximum delay between retries
+  
+  # Error categorization and handling strategies  
+  error_types:
+    # Network/connectivity errors
+    network_errors:
+      patterns:
+        - "Connection refused"
+        - "Connection timed out" 
+        - "Network unreachable"
+        - "DNS resolution failed"
+      retry: true
+      max_retries: 5
+      retry_delay: 10
+      
+    # Authentication/authorization errors  
+    auth_errors:
+      patterns:
+        - "Authentication failed"
+        - "Invalid API key"
+        - "Unauthorized"
+        - "Access denied"
+      retry: false
+      action: "abort"
+      
+    # Rate limiting errors
+    rate_limit_errors:
+      patterns:
+        - "Rate limit exceeded"
+        - "Too many requests"
+        - "Quota exceeded"
+      retry: true
+      max_retries: 10
+      retry_delay: 30
+      exponential_backoff: true
+      
+    # Model/API errors
+    api_errors:
+      patterns:
+        - "Model not found"
+        - "Invalid model"
+        - "Service unavailable"
+        - "Internal server error"
+      retry: true
+      max_retries: 3
+      retry_delay: 15
+      
+    # Input validation errors
+    validation_errors:
+      patterns:
+        - "Invalid prompt"
+        - "Prompt too long"
+        - "Invalid parameters"
+        - "Malformed request"
+      retry: false
+      action: "fix_and_retry"
+      
+    # Timeout errors
+    timeout_errors:
+      patterns:
+        - "Request timeout"
+        - "Operation timed out"
+        - "Deadline exceeded"
+      retry: true
+      max_retries: 2
+      retry_delay: 5
+      increase_timeout: true
+
+  # Fallback strategies
+  fallback:
+    # Try different models if primary fails
+    model_fallback: true
+    fallback_models:
+      - "claude-3-5-sonnet-20241022"
+      - "claude-3-haiku-20240307"
+      
+    # Simplify prompt if it's too complex
+    prompt_simplification: true
+    max_prompt_length: 4000
+    
+    # Graceful degradation
+    graceful_degradation: true
+    
+  # Logging and monitoring
+  logging:
+    log_level: "INFO"
+    log_errors: true
+    log_retries: true
+    log_fallbacks: true
+    error_log_file: "error.log"
+    
+  # Recovery strategies
+  recovery:
+    # Clean up corrupted sessions
+    cleanup_on_error: true
+    
+    # Save partial results
+    save_partial_results: true
+    
+    # Resume from last successful step
+    resume_capability: true
+    
+    # Checkpoint frequency (for long operations)
+    checkpoint_interval: 5  # steps

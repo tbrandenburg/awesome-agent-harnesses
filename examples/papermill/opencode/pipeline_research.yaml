@@ -1,0 +1,43 @@
+---
+# Multi-step AI Research Pipeline
+# This configuration defines a complex reasoning chain that demonstrates
+# how to use multiple OpenCode agents in sequence for research tasks
+
+steps:
+  - name: "research_question"
+    prompt: "You are a research assistant. Generate 3 specific, focused research questions about the impact of AI on software development productivity. Each question should be answerable through analysis and reasoning."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 60
+    
+  - name: "analyze_question_1" 
+    prompt: "Take the first research question from the previous response and provide a comprehensive analysis. Include current trends, statistical evidence where possible, and cite relevant studies or industry reports. Be thorough but concise."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 90
+    depends_on: "research_question"
+    
+  - name: "analyze_question_2"
+    prompt: "Take the second research question from the first response and provide a comprehensive analysis. Focus on practical implications and real-world case studies. Include both benefits and challenges."
+    model: "claude-3-5-sonnet-20241022" 
+    timeout: 90
+    depends_on: "research_question"
+    
+  - name: "synthesize_findings"
+    prompt: "Based on the two analyses provided, create a unified executive summary that synthesizes the key findings. Identify common themes, contradictions, and actionable insights. Structure this as a brief report suitable for technical leadership."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 120
+    depends_on: ["analyze_question_1", "analyze_question_2"]
+    
+  - name: "generate_recommendations"
+    prompt: "Based on all the previous research and analysis, generate 5 specific, actionable recommendations for software development teams looking to optimize their use of AI tools. Each recommendation should include implementation steps and success metrics."
+    model: "claude-3-5-sonnet-20241022"
+    timeout: 90
+    depends_on: "synthesize_findings"
+
+# Pipeline configuration
+pipeline:
+  name: "AI Software Development Impact Research"
+  description: "Multi-step research pipeline analyzing AI impact on software development"
+  output_format: "markdown"
+  session_management: true
+  error_handling: "continue"  # continue on error vs "stop"
+  max_retries: 2
