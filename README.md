@@ -12,12 +12,20 @@ cd examples/papermill/opencode
 make run PROMPT="Create a Python function that calculates fibonacci numbers"
 ```
 
-### Kiro Database Analysis
-Analyze conversation histories from Kiro CLI:
+### Adversarial Loop
+Iterative document improvement through critical feedback loops:
 
 ```bash
-cd examples
-./kiro-history-viewer.sh /path/to/data.sqlite3
+cd examples/adversarial_loop
+# Run adversarial review process on your document
+```
+
+### Editorial Pipeline
+Multi-stage collaborative editing with specialized reviewer perspectives:
+
+```bash
+cd examples/editorial_pipeline
+# Execute multi-hat editorial review process
 ```
 
 ## 📋 Available Harnesses
@@ -43,17 +51,42 @@ make run-explanation    # Technical explanations
 make test-all           # Run all example workflows
 ```
 
-### 2. **Kiro CLI Analysis Tools** 📊  
-**Location**: `examples/`  
+### 2. **Adversarial Loop System** 🔄  
+**Location**: `examples/adversarial_loop/`  
 **Status**: ✅ Production Ready
 
-Comprehensive tools for analyzing Kiro CLI conversation databases with zero dependencies.
+Iterative document improvement through structured critical feedback and revision cycles.
 
-**Available Tools:**
-- `kiro-history-viewer.sh` - Bash script for viewing histories (zero dependencies)
-- `kiro-analyzer.js` - Rich JavaScript analyzer with console output
-- `kiro-types.ts` - Complete TypeScript type definitions
-- Full SQL schema documentation
+**Key Features:**
+- **Multi-round Reviews**: Documents undergo multiple rounds of adversarial criticism
+- **Critical Feedback**: AI reviewers provide harsh but constructive criticism to identify weaknesses  
+- **Iterative Refinement**: Each version addresses previous feedback until quality standards are met
+- **Quality Assurance**: Process continues until reviewers approve final version
+
+**Sample Workflow:**
+```bash
+cd examples/adversarial_loop
+# Initial document: document_v001.md
+# → Critical review: reviewer_feedback_1.md  
+# → Revision cycle continues until approval
+```
+
+### 3. **Editorial Pipeline** ✍️  
+**Location**: `examples/editorial_pipeline/`  
+**Status**: ✅ Production Ready
+
+Multi-stage collaborative editorial system using specialized AI reviewers with different analytical perspectives.
+
+**Available Review Perspectives:**
+- **White Hat (Facts & Information)** - Analyzes factual accuracy, data verification, citations
+- **Red Hat (Emotions & Intuition)** - Evaluates emotional impact, reader engagement, tone
+- **Additional Hats** - Extensible framework for specialized review perspectives
+
+**Process Flow:**
+1. Original content input (`01_original_essay.md`)
+2. Multi-perspective AI reviews (`review_1.md`, `review_2.md`)  
+3. Final polished output (`99_final_polished_essay.md`)
+4. Timestamped session logs and comprehensive documentation
 
 ## 🛠️ Environment Setup
 
@@ -65,15 +98,17 @@ source venv/bin/activate # Activate virtual environment
 make jupyter            # Launch JupyterLab interface
 ```
 
-### Kiro Analysis Tools  
+### Editorial Systems Environment
 ```bash
-cd examples
-npm install            # Install JavaScript dependencies (optional)
+cd examples/editorial_pipeline    # or examples/adversarial_loop
+# Systems use OpenCode CLI - ensure it's installed and configured
+opencode --version              # Verify OpenCode CLI availability
 ```
 
 ## 📚 Documentation
 
-- **[Kiro Database Analysis Guide](docs/kiro-database-analysis.md)** - Complete SQL schema and usage examples
+- **[Adversarial Loop Guide](examples/adversarial_loop/README.md)** - Iterative document improvement patterns
+- **[Editorial Pipeline Guide](examples/editorial_pipeline/README.md)** - Multi-perspective collaborative editing
 - **[Papermill Integration Guide](examples/papermill/README.md)** - Detailed setup and usage
 - **[OpenCode Agent Guide](examples/papermill/opencode/README.md)** - Atomic agent patterns
 
@@ -93,11 +128,14 @@ make pipeline           # Execute predefined multi-step workflow
 make batch             # Run multiple prompts in sequence  
 ```
 
-### Database Analysis
-Extract insights from conversation histories:
+### Editorial Workflows
+Execute document improvement and collaborative editing workflows:
 ```bash
-./kiro-history-viewer.sh data.sqlite3 | grep "2024-01" 
-node kiro-analyzer.js --stats data.sqlite3
+# Adversarial Loop - iterative improvement
+cd examples/adversarial_loop && ./run_adversarial_review.sh document.md
+
+# Editorial Pipeline - multi-perspective review  
+cd examples/editorial_pipeline && ./pipeline_essay.sh essay.md
 ```
 
 ## 🏗️ Architecture
@@ -113,6 +151,28 @@ User Input → YAML Config → Papermill → Jupyter Notebook → OpenCode CLI �
 - **Output**: Timestamped results with full context
 - **Cleanup**: Automatic session management and cleanup
 
+### Adversarial Loop Pattern
+- **Input**: Initial document for improvement
+- **Processing**: Multi-round critical review and revision cycles
+- **Output**: Iteratively improved document with approval trail
+- **Quality Control**: Continues until reviewers approve final version
+
+### Editorial Pipeline Pattern  
+- **Input**: Original content requiring editorial review
+- **Processing**: Specialized AI reviewers using "thinking hats" methodology
+- **Output**: Polished content with comprehensive review documentation
+- **Multi-perspective**: Facts, emotions, and other analytical dimensions
+
+### Adversarial Loop Pattern
+```
+Document Input → Critical Review → Revision → Further Review → ... → Final Approval
+```
+
+### Editorial Pipeline Pattern  
+```
+Original Content → Multi-Hat Reviews → Synthesis → Polished Output
+```
+
 ### Database Analysis Pattern
 - **Input**: SQLite database from Kiro CLI
 - **Processing**: SQL queries + JavaScript analysis
@@ -125,6 +185,12 @@ User Input → YAML Config → Papermill → Jupyter Notebook → OpenCode CLI �
 1. Create new YAML parameter files in `examples/papermill/opencode/`
 2. Add corresponding Makefile targets for easy execution
 3. Document usage patterns in README files
+
+### Extending Editorial Systems
+1. Add new "thinking hat" perspectives to editorial pipeline
+2. Create specialized review agents for specific domains (technical, creative, etc.)
+3. Customize review criteria and feedback patterns
+4. Extend adversarial loop with domain-specific criticism strategies
 
 ### Extending Database Analysis
 1. Add new SQL queries to analysis tools
@@ -140,6 +206,10 @@ cd examples/papermill && make test
 # Test OpenCode atomic agents  
 cd examples/papermill/opencode && make test-all
 
+# Test editorial systems
+cd examples/editorial_pipeline && ./test_pipeline.sh
+cd examples/adversarial_loop && ./test_adversarial.sh
+
 # Test Kiro analysis tools
 cd examples && npm test
 ```
@@ -147,6 +217,8 @@ cd examples && npm test
 ## 📈 Performance
 
 - **Atomic agents**: ~2-10 seconds per execution (model dependent)
+- **Adversarial loops**: ~30-120 seconds per iteration cycle (depends on complexity)
+- **Editorial pipeline**: ~45-90 seconds for complete multi-hat review
 - **Database analysis**: Handles databases with 10k+ conversations
 - **Session overhead**: Minimal with automatic cleanup
 - **Parallelization**: Full support for concurrent operations
