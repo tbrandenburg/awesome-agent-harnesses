@@ -1,0 +1,21 @@
+{
+  "name": "kiro-database-analyzer",
+  "version": "1.0.0",
+  "description": "Analyzer for Kiro CLI conversation database",
+  "main": "kiro-analyzer.js",
+  "scripts": {
+    "analyze": "node kiro-analyzer.js",
+    "install-deps": "npm install sqlite3 chalk cli-table3"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.3"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": ["kiro", "cli", "database", "analysis", "conversation", "sqlite"],
+  "author": "AI Assistant",
+  "license": "MIT"
+}

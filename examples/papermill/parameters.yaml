@@ -1,0 +1,6 @@
+# Sample parameters for papermill execution
+# Usage: papermill example.ipynb output.ipynb -f parameters.yaml
+
+message: "Hello from Papermill automation!"
+multiplier: 3
+generate_plot: true

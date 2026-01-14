@@ -1,0 +1,8 @@
+# Example 1: Simple riddle generation
+prompt: "Generate a creative riddle about programming that involves loops and conditions"
+model: ""
+session_id: ""
+additional_args: ""
+output_format: "text"
+timeout: "300"
+verbose: "true"

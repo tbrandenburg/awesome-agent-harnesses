@@ -1,0 +1,8 @@
+# Example 2: Code generation with specific model
+prompt: "Write a Python function that calculates fibonacci numbers using memoization"
+model: "opencode/grok-code"
+session_id: ""
+additional_args: ""
+output_format: "text"
+timeout: "300"
+verbose: "true"

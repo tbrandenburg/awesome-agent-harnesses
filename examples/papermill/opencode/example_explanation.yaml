@@ -1,0 +1,8 @@
+# Example 3: Technical explanation
+prompt: "Explain the difference between synchronous and asynchronous programming in simple terms"
+model: ""
+session_id: ""
+additional_args: ""
+output_format: "markdown"
+timeout: "300"
+verbose: "false"

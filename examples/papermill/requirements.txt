@@ -1,0 +1,25 @@
+# Papermill Environment Requirements
+# For parameterized notebook execution and Jupyter development
+
+# Core papermill functionality
+papermill>=2.4.0
+
+# Jupyter environment
+jupyterlab>=4.0.0
+notebook>=7.0.0
+
+# Notebook client (assuming you meant nbclient, not nbcliebt)
+nbclient>=0.8.0
+
+# Bash kernel for Jupyter
+bash_kernel>=0.9.0
+
+# Additional useful packages for notebook execution
+ipykernel>=6.25.0
+jupyter>=1.0.0
+
+# Optional: Enhanced notebook experience
+ipywidgets>=8.0.0
+matplotlib>=3.7.0
+pandas>=2.0.0
+numpy>=1.24.0
