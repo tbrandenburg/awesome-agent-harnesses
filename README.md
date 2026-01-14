@@ -6,6 +6,8 @@ This repository serves as both a **community index** of agent harnesses and a **
 
 ## 🌟 Community Agent Harnesses
 
+> **📚 Foundation**: For comprehensive agentic patterns and design principles that underpin these harnesses, see [awesome-agentic-patterns](https://github.com/nibzard/awesome-agentic-patterns) - a curated collection of architectural patterns for building AI agents.
+
 ### Coding & Development
 
 #### **Anthropic's Autonomous Coding Agent** 🤖
