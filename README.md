@@ -125,6 +125,38 @@ Multi-stage collaborative editorial system using specialized AI reviewers with d
 3. Final polished output (`99_final_polished_essay.md`)
 4. Timestamped session logs and comprehensive documentation
 
+### 4. **ACP Integration Clients** 🔗  
+**Location**: Root directory (`acp_client.py`, `advanced_acp_client.py`, `practical_code_review.py`)  
+**Status**: ✅ Production Ready
+
+Python clients for OpenCode's Agent Client Protocol (ACP) enabling editor-independent agent workflows and programmatic AI interactions.
+
+**Available Clients:**
+- **Basic ACP Client** (`acp_client.py`) - Simple ACP interaction example
+- **Advanced ACP Client** (`advanced_acp_client.py`) - Feature-rich client with session management, tool monitoring, and interactive modes
+- **Code Review Harness** (`practical_code_review.py`) - Real-world example using ACP for automated code analysis
+
+**Key Features:**
+- **Editor Independence** - Run OpenCode agents from any environment without VS Code
+- **Session Management** - Full control over agent sessions, model selection, and working directories
+- **Tool Call Monitoring** - Real-time visibility into agent tool usage and execution
+- **Streaming Responses** - Live response streaming with proper cleanup
+- **MCP Integration** - Seamless integration with Model Context Protocol servers
+- **Batch Operations** - Support for multiple prompts and file processing
+
+**Quick Start:**
+```bash
+# Basic usage
+python acp_client.py "Explain how ACP works"
+
+# Advanced interactive mode  
+python advanced_acp_client.py --interactive
+
+# Code review automation
+python practical_code_review.py --file example.py --type security
+python practical_code_review.py --directory src/ --output review.md
+```
+
 ## 🛠️ Environment Setup
 
 ### Papermill Environment
@@ -148,6 +180,7 @@ opencode --version              # Verify OpenCode CLI availability
 - **[Editorial Pipeline Guide](examples/editorial_pipeline/README.md)** - Multi-perspective collaborative editing
 - **[Papermill Integration Guide](examples/papermill/README.md)** - Detailed setup and usage
 - **[OpenCode Agent Guide](examples/papermill/opencode/README.md)** - Atomic agent patterns
+- **[ACP Integration Guide](#acp-integration-patterns)** - OpenCode ACP protocol clients and automation patterns
 
 ## 🎯 Usage Patterns
 
@@ -173,6 +206,17 @@ cd examples/adversarial_loop && ./run_adversarial_review.sh document.md
 
 # Editorial Pipeline - multi-perspective review  
 cd examples/editorial_pipeline && ./pipeline_essay.sh essay.md
+```
+
+### ACP Integration
+Run AI agents programmatically without editor dependencies:
+```bash
+# Interactive ACP session
+python advanced_acp_client.py --interactive
+
+# Automated code review  
+python practical_code_review.py --file src/main.py --type comprehensive
+python practical_code_review.py --batch "src/**/*.py" --output review_report.md
 ```
 
 ## 🏗️ Architecture
@@ -208,6 +252,11 @@ Document Input → Critical Review → Revision → Further Review → ... → F
 ### Editorial Pipeline Pattern  
 ```
 Original Content → Multi-Hat Reviews → Synthesis → Polished Output
+```
+
+### ACP Integration Pattern
+```
+Python Client → ACP Protocol → OpenCode Session → AI Response → Structured Output
 ```
 
 ### Database Analysis Pattern
@@ -277,6 +326,157 @@ cd examples && npm test
 ## 📄 License
 
 MIT License - see LICENSE file for details.
+
+## 🔗 ACP Integration Patterns
+
+### Understanding ACP (Agent Client Protocol)
+
+The Agent Client Protocol (ACP) enables programmatic interaction with OpenCode agents outside of VS Code or other editors. This allows for:
+
+- **Headless AI Operations** - Run agents in CI/CD, scripts, and automation workflows
+- **Custom Workflows** - Build specialized harnesses tailored to specific use cases  
+- **Editor Independence** - Use any development environment while accessing OpenCode capabilities
+- **Batch Processing** - Automate repetitive AI tasks across multiple files or projects
+
+### Available ACP Clients
+
+#### 1. Basic ACP Client (`acp_client.py`)
+Simple demonstration of ACP protocol interaction:
+```python
+# Basic usage example
+import subprocess
+result = subprocess.run([
+    "python", "acp_client.py", 
+    "Analyze this code for potential issues"
+], capture_output=True, text=True)
+```
+
+#### 2. Advanced ACP Client (`advanced_acp_client.py`)  
+Production-ready client with comprehensive features:
+```bash
+# Single prompt execution
+python advanced_acp_client.py --prompt "Review this codebase"
+
+# Interactive mode for multiple prompts
+python advanced_acp_client.py --interactive
+
+# Custom timeouts and working directories
+python advanced_acp_client.py --prompt "Generate tests" --timeout 300 --workdir /path/to/project
+```
+
+#### 3. Practical Code Review Harness (`practical_code_review.py`)
+Real-world automation example for code analysis:
+```bash
+# Single file analysis
+python practical_code_review.py --file src/main.py --type comprehensive
+
+# Directory-wide security scan  
+python practical_code_review.py --directory src/ --type security --output security_report.md
+
+# Batch processing with glob patterns
+python practical_code_review.py --batch "**/*.py" --type performance --max-files 20
+```
+
+### ACP Architecture
+
+```
+┌─────────────────┐    ┌──────────────┐    ┌─────────────────┐
+│   Python Client │    │     ACP      │    │   OpenCode      │
+│                 │◄──►│   Protocol   │◄──►│   Session       │
+│ (Your Harness)  │    │  (WebSocket) │    │                 │
+└─────────────────┘    └──────────────┘    └─────────────────┘
+                              │
+                              ▼
+                    ┌──────────────────┐
+                    │  Model Context   │
+                    │  Protocol (MCP)  │
+                    │    Servers       │
+                    └──────────────────┘
+```
+
+### Protocol Flow
+
+1. **Initialize** - Establish connection and negotiate capabilities
+2. **Create Session** - Set working directory, load MCP servers  
+3. **Send Prompts** - Execute AI requests with streaming responses
+4. **Monitor Activity** - Track tool calls, file operations, and status updates
+5. **Cleanup** - Properly close sessions and connections
+
+### Integration Examples
+
+#### Automated Testing Pipeline
+```python
+# Integrate ACP into CI/CD for automated code review
+import subprocess
+import json
+
+def review_changed_files(git_diff_files):
+    results = []
+    for file_path in git_diff_files:
+        result = subprocess.run([
+            "python", "practical_code_review.py", 
+            "--file", file_path, 
+            "--type", "security"
+        ], capture_output=True, text=True)
+        
+        if "CRITICAL" in result.stdout:
+            results.append({"file": file_path, "status": "FAIL"})
+        else:
+            results.append({"file": file_path, "status": "PASS"})
+    
+    return results
+```
+
+#### Custom Documentation Generator  
+```python
+# Use ACP for automated documentation generation
+def generate_docs(source_files):
+    for file_path in source_files:
+        prompt = f"Generate comprehensive documentation for {file_path}"
+        subprocess.run([
+            "python", "advanced_acp_client.py",
+            "--prompt", prompt,
+            "--workdir", os.path.dirname(file_path)
+        ])
+```
+
+#### Multi-Agent Coordination
+```python
+# Coordinate multiple ACP clients for complex workflows
+import asyncio
+import concurrent.futures
+
+async def parallel_analysis(files):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        futures = []
+        
+        for file_path in files:
+            future = executor.submit(
+                subprocess.run,
+                ["python", "practical_code_review.py", "--file", file_path],
+                capture_output=True, text=True
+            )
+            futures.append(future)
+        
+        results = [f.result() for f in concurrent.futures.as_completed(futures)]
+        return results
+```
+
+### Best Practices
+
+1. **Session Management** - Always properly initialize and cleanup ACP sessions
+2. **Error Handling** - Implement robust error handling for network and timeout issues
+3. **Resource Limits** - Set appropriate timeouts and file size limits for batch operations
+4. **Parallel Processing** - Use multiple ACP clients for concurrent operations when needed
+5. **MCP Integration** - Leverage MCP servers for enhanced tool capabilities when available
+
+### Configuration
+
+ACP clients respect OpenCode's existing configuration:
+- **Model Selection** - Uses default model or specify via session parameters
+- **MCP Servers** - Automatically loads configured MCP servers
+- **Working Directory** - Respects file permissions and git repositories
+- **Authentication** - Uses existing OpenCode authentication tokens
 
 ---
 
