@@ -126,7 +126,7 @@ Multi-stage collaborative editorial system using specialized AI reviewers with d
 4. Timestamped session logs and comprehensive documentation
 
 ### 4. **ACP Integration Clients** 🔗  
-**Location**: Root directory (`acp_client.py`, `advanced_acp_client.py`, `practical_code_review.py`)  
+**Location**: `examples/acp/`  
 **Status**: ✅ Production Ready
 
 Python clients for OpenCode's Agent Client Protocol (ACP) enabling editor-independent agent workflows and programmatic AI interactions.
@@ -135,6 +135,7 @@ Python clients for OpenCode's Agent Client Protocol (ACP) enabling editor-indepe
 - **Basic ACP Client** (`acp_client.py`) - Simple ACP interaction example
 - **Advanced ACP Client** (`advanced_acp_client.py`) - Feature-rich client with session management, tool monitoring, and interactive modes
 - **Code Review Harness** (`practical_code_review.py`) - Real-world example using ACP for automated code analysis
+- **Multi-Agent Coordinator** (`multi_agent_coordinator.py`) - Sophisticated system coordinating multiple specialized AI agents
 
 **Key Features:**
 - **Editor Independence** - Run OpenCode agents from any environment without VS Code
@@ -143,18 +144,22 @@ Python clients for OpenCode's Agent Client Protocol (ACP) enabling editor-indepe
 - **Streaming Responses** - Live response streaming with proper cleanup
 - **MCP Integration** - Seamless integration with Model Context Protocol servers
 - **Batch Operations** - Support for multiple prompts and file processing
+- **Multi-Agent Coordination** - Orchestrate specialized agents for complex analysis tasks
 
 **Quick Start:**
 ```bash
-# Basic usage
-python acp_client.py "Explain how ACP works"
+cd examples/acp
 
-# Advanced interactive mode  
-python advanced_acp_client.py --interactive
+# Test basic functionality
+make test-basic
+
+# Interactive mode  
+make interactive
 
 # Code review automation
-python practical_code_review.py --file example.py --type security
-python practical_code_review.py --directory src/ --output review.md
+make demo-review
+make review-file FILE=example.py
+make review-security DIR=src/
 ```
 
 ## 🛠️ Environment Setup
@@ -180,7 +185,7 @@ opencode --version              # Verify OpenCode CLI availability
 - **[Editorial Pipeline Guide](examples/editorial_pipeline/README.md)** - Multi-perspective collaborative editing
 - **[Papermill Integration Guide](examples/papermill/README.md)** - Detailed setup and usage
 - **[OpenCode Agent Guide](examples/papermill/opencode/README.md)** - Atomic agent patterns
-- **[ACP Integration Guide](#acp-integration-patterns)** - OpenCode ACP protocol clients and automation patterns
+- **[ACP Integration Guide](examples/acp/README.md)** - OpenCode ACP protocol clients and automation patterns
 
 ## 🎯 Usage Patterns
 
@@ -211,12 +216,21 @@ cd examples/editorial_pipeline && ./pipeline_essay.sh essay.md
 ### ACP Integration
 Run AI agents programmatically without editor dependencies:
 ```bash
+cd examples/acp
+
+# Test basic functionality
+make test-basic
+
 # Interactive ACP session
-python advanced_acp_client.py --interactive
+make interactive
 
 # Automated code review  
-python practical_code_review.py --file src/main.py --type comprehensive
-python practical_code_review.py --batch "src/**/*.py" --output review_report.md
+make demo-review
+make review-file FILE=src/main.py
+make review-security DIR=src/
+
+# Multi-agent project analysis
+make demo-multi-agent
 ```
 
 ## 🏗️ Architecture
