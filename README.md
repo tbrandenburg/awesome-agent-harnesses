@@ -131,35 +131,21 @@ Multi-stage collaborative editorial system using specialized AI reviewers with d
 
 Python clients for OpenCode's Agent Client Protocol (ACP) enabling editor-independent agent workflows and programmatic AI interactions.
 
-**Available Clients:**
-- **Basic ACP Client** (`acp_client.py`) - Simple ACP interaction example
-- **Advanced ACP Client** (`advanced_acp_client.py`) - Feature-rich client with session management, tool monitoring, and interactive modes
-- **Code Review Harness** (`practical_code_review.py`) - Real-world example using ACP for automated code analysis
-- **Multi-Agent Coordinator** (`multi_agent_coordinator.py`) - Sophisticated system coordinating multiple specialized AI agents
-
 **Key Features:**
 - **Editor Independence** - Run OpenCode agents from any environment without VS Code
 - **Session Management** - Full control over agent sessions, model selection, and working directories
 - **Tool Call Monitoring** - Real-time visibility into agent tool usage and execution
-- **Streaming Responses** - Live response streaming with proper cleanup
-- **MCP Integration** - Seamless integration with Model Context Protocol servers
-- **Batch Operations** - Support for multiple prompts and file processing
 - **Multi-Agent Coordination** - Orchestrate specialized agents for complex analysis tasks
+- **Batch Operations** - Support for multiple prompts and file processing
+- **MCP Integration** - Seamless integration with Model Context Protocol servers
 
-**Quick Start:**
+**Quick Commands:**
 ```bash
 cd examples/acp
-
-# Test basic functionality
-make test-basic
-
-# Interactive mode  
-make interactive
-
-# Code review automation
-make demo-review
-make review-file FILE=example.py
-make review-security DIR=src/
+make test-basic         # Test basic ACP functionality
+make interactive        # Interactive ACP session  
+make demo-review        # Code review automation
+make demo-multi-agent   # Multi-agent project analysis
 ```
 
 ## 🛠️ Environment Setup
