@@ -49,6 +49,15 @@ cd examples/papermill/opencode
 make run PROMPT="Create a Python function that calculates fibonacci numbers"
 ```
 
+### Papermill + Kiro-CLI Integration  
+Execute atomic AI agents with kiro-cli through automated notebook workflows:
+
+```bash
+cd examples/papermill/kiro
+make test                    # Quick functionality test
+make run PROMPT="What is the capital of France?"
+```
+
 ### Adversarial Loop
 Iterative document improvement through critical feedback loops:
 
@@ -148,6 +157,29 @@ make demo-review        # Code review automation
 make demo-multi-agent   # Multi-agent project analysis
 ```
 
+### 5. **Papermill + Kiro-CLI Atomic Agent** 🤖  
+**Location**: `examples/papermill/kiro/`  
+**Status**: ✅ Production Ready
+
+Complete kiro-cli integration using Papermill for parameterized AI agent execution with proper output handling and ANSI cleanup.
+
+**Key Features:**
+- **Atomic Execution**: Isolated kiro-cli runs with `--trust-all-tools` for maximum functionality
+- **Proper Output Handling**: Uses `nbformat` for reliable notebook reading with ANSI escape sequence cleanup  
+- **Timestamped Results**: All executions create unique output files with comprehensive logging
+- **Security Mode**: Runs with full tool trust for maximum agent capabilities
+- **Makefile Automation**: Simple commands for testing, execution, and cleanup
+- **Error Resilience**: Comprehensive timeout and error handling with graceful fallbacks
+
+**Quick Commands:**
+```bash
+cd examples/papermill/kiro
+make test                    # Quick functionality test
+make run PROMPT="your prompt here"  # Custom prompt execution  
+make run-simple             # Hello world example
+make clean                  # Cleanup output files
+```
+
 ## 🛠️ Environment Setup
 
 ### Papermill Environment
@@ -171,6 +203,7 @@ opencode --version              # Verify OpenCode CLI availability
 - **[Editorial Pipeline Guide](examples/editorial_pipeline/README.md)** - Multi-perspective collaborative editing
 - **[Papermill Integration Guide](examples/papermill/README.md)** - Detailed setup and usage
 - **[OpenCode Agent Guide](examples/papermill/opencode/README.md)** - Atomic agent patterns
+- **[Kiro-CLI Agent Guide](examples/papermill/kiro/README.md)** - Kiro-CLI atomic agent execution patterns
 - **[ACP Integration Guide](examples/acp/README.md)** - OpenCode ACP protocol clients and automation patterns
 
 ## 🎯 Usage Patterns
