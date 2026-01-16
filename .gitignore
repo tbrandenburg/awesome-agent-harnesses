@@ -182,3 +182,4 @@ Thumbs.db
 
 # User
 examples/data.sqlite3
+output/

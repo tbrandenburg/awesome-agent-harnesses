@@ -31,7 +31,7 @@ help:
 	@echo "  make jupyter"
 
 # Default parameters for the example notebook
-MESSAGE ?= "Hello from Papermill Makefile!"
+MESSAGE ?= Hello from Papermill Makefile!
 MULTIPLIER ?= 2
 GENERATE_PLOT ?= true
 TIMEOUT ?= 300
