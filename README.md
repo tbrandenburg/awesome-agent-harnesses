@@ -10,6 +10,18 @@ This repository serves as both a **community index** of agent harnesses and a **
 
 ### Coding & Development
 
+#### **Orbi**
+**Repository**: [orbi-build/orbi](https://github.com/orbi-build/orbi)  
+**Website**: [orbi.build](https://orbi.build/)
+
+Self-hostable coding agent that takes labeled GitHub issues through isolated implementation, independent acceptance review, merged pull requests, and tagged releases.
+
+**Key Features:**
+- AGPL-3.0 with bring-your-own model key
+- Isolated worktrees per change
+- Separate review session before merge
+- Operations tickets with command output on the issue
+
 #### **Anthropic's Autonomous Coding Agent** 🤖
 **Repository**: [claude-quickstarts/autonomous-coding](https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding)  
 **Article**: [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
